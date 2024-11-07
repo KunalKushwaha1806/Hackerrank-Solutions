@@ -1,0 +1,51 @@
+def highestValuePalindrome(s, n, k):
+    # Convert the string to a list of characters for easier manipulation
+    s = list(s)
+    
+    # Step 1: Make the string a palindrome with the minimum number of changes
+    changes_needed = [0] * n  # To track where changes are made
+    remaining_changes = k
+    
+    # First pass: make the string a palindrome
+    for i in range(n // 2):
+        if s[i] != s[n - i - 1]:
+            # If characters are different, change the smaller one to match the larger one
+            if s[i] > s[n - i - 1]:
+                s[n - i - 1] = s[i]
+            else:
+                s[i] = s[n - i - 1]
+            changes_needed[i] = 1  # Mark that a change was made
+            remaining_changes -= 1
+            if remaining_changes < 0:
+                return "-1"  # Not enough changes to make it a palindrome
+    
+    # Step 2: Maximize the palindrome
+    for i in range(n // 2):
+        if s[i] != '9':
+            if changes_needed[i] == 1:
+                # If this pair was already changed once, we only need 1 more change to make both '9'
+                if remaining_changes >= 1:
+                    s[i] = s[n - i - 1] = '9'
+                    remaining_changes -= 1
+            elif changes_needed[i] == 0:
+                # If no change was made yet, we need 2 changes to make this pair '9'
+                if remaining_changes >= 2:
+                    s[i] = s[n - i - 1] = '9'
+                    remaining_changes -= 2
+    
+    # Step 3: Handle the middle character for odd-length strings
+    if n % 2 == 1 and remaining_changes > 0:
+        s[n // 2] = '9'
+    
+    return ''.join(s)
+
+if __name__ == '__main__':
+    # Read input
+    n, k = map(int, input().split())
+    s = input().strip()
+    
+    # Get the result from the function
+    result = highestValuePalindrome(s, n, k)
+    
+    # Output the result
+    print(result)
