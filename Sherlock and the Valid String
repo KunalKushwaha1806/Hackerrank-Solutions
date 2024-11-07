@@ -1,0 +1,32 @@
+from collections import Counter
+
+def isValid(s):
+    # Step 1: Count frequency of each character
+    char_count = Counter(s)
+    
+    # Step 2: Count how many times each frequency occurs
+    freq_count = Counter(char_count.values())
+    
+    # Step 3: Conditions for validity
+    if len(freq_count) == 1:
+        # Case 1: All characters have the same frequency
+        return "YES"
+    elif len(freq_count) == 2:
+        # Case 2: Two different frequencies
+        # Get the two frequency counts
+        (freq1, count1), (freq2, count2) = freq_count.items()
+        
+        # Check if one of the frequencies is 1 and occurs only once
+        # or if the difference between the frequencies is 1 and the larger one occurs only once
+        if (freq1 == 1 and count1 == 1) or (freq2 == 1 and count2 == 1):
+            return "YES"
+        if abs(freq1 - freq2) == 1 and (count1 == 1 or count2 == 1):
+            return "YES"
+    
+    # If neither condition is met, the string is not valid
+    return "NO"
+
+# Example usage:
+if __name__ == '__main__':
+    s = input().strip()
+    print(isValid(s))
