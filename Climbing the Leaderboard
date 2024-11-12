@@ -1,0 +1,30 @@
+def climbingLeaderboard(ranked, player):
+    # Remove duplicates from the leaderboard for dense ranking
+    ranked = sorted(set(ranked), reverse=True)
+    
+    # Prepare result list for the player's ranks
+    results = []
+    n = len(ranked)
+    index = n - 1  # Start from the lowest rank in the unique leaderboard
+    
+    # Go through each score in player's scores
+    for score in player:
+        # Move up the leaderboard until the player's score is less than the leaderboard score
+        while index >= 0 and score >= ranked[index]:
+            index -= 1
+        # The rank is the (index position + 2), since rank is 1-based and `index + 1` is the position right below the player's score
+        results.append(index + 2)
+    
+    return results
+
+# Input/output handling (example format)
+if __name__ == '__main__':
+    ranked_count = int(input().strip())
+    ranked = list(map(int, input().rstrip().split()))
+    player_count = int(input().strip())
+    player = list(map(int, input().rstrip().split()))
+    
+    result = climbingLeaderboard(ranked, player)
+    
+    # Print each result on a new line
+    print('\n'.join(map(str, result)))
