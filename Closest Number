@@ -1,0 +1,30 @@
+import math
+
+def closestNumber(a, b, x):
+    # Calculate a^b
+    target = a ** b
+    
+    # Calculate the closest multiples
+    lower_multiple = (target // x) * x
+    upper_multiple = (target // x + 1) * x if target % x != 0 else lower_multiple
+    
+    # Determine which multiple is closer to target
+    if abs(target - lower_multiple) < abs(target - upper_multiple):
+        return lower_multiple
+    elif abs(target - lower_multiple) > abs(target - upper_multiple):
+        return upper_multiple
+    else:
+        # If they are equally close, return the smaller one
+        return min(lower_multiple, upper_multiple)
+
+# Reading input and handling multiple test cases
+if __name__ == '__main__':
+    t = int(input().strip())
+    results = []
+    for _ in range(t):
+        a, b, x = map(int, input().strip().split())
+        results.append(closestNumber(a, b, x))
+    
+    # Output all results
+    for result in results:
+        print(int(result))
