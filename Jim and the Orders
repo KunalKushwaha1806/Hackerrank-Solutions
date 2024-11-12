@@ -1,0 +1,22 @@
+def jimOrders(orders):
+    # Calculate delivery time for each customer and store with customer number (1-based index)
+    indexed_orders = [(i + 1, order[0] + order[1]) for i, order in enumerate(orders)]
+    
+    # Sort by delivery time, and by customer number if times are equal
+    indexed_orders.sort(key=lambda x: (x[1], x[0]))
+    
+    # Extract the sorted customer numbers
+    result = [customer[0] for customer in indexed_orders]
+    
+    return result
+
+# Input/output handling (example format)
+if __name__ == '__main__':
+    n = int(input().strip())
+    orders = [list(map(int, input().rstrip().split())) for _ in range(n)]
+    
+    result = jimOrders(orders)
+    
+    # Print the result as space-separated customer numbers
+    print(' '.join(map(str, result)))
+
