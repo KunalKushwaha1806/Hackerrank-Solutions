@@ -1,0 +1,42 @@
+import os
+
+def biggerIsGreater(w):
+    # Convert the string to a list of characters for easier manipulation
+    w = list(w)
+    length = len(w)
+    
+    # Step 1: Find the largest index i such that w[i] < w[i + 1]
+    i = length - 2
+    while i >= 0 and w[i] >= w[i + 1]:
+        i -= 1
+    
+    if i == -1:
+        return "no answer"  # No larger permutation possible (w is in descending order)
+    
+    # Step 2: Find the largest index j such that w[j] > w[i]
+    j = length - 1
+    while w[j] <= w[i]:
+        j -= 1
+    
+    # Step 3: Swap w[i] and w[j]
+    w[i], w[j] = w[j], w[i]
+    
+    # Step 4: Reverse the sequence from w[i + 1] to the end of the string
+    w = w[:i + 1] + w[i + 1:][::-1]
+    
+    # Convert list back to string and return the result
+    return ''.join(w)
+
+if __name__ == '__main__':
+    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+
+    T = int(input().strip())  # Read the number of test cases
+
+    for T_itr in range(T):
+        w = input().strip()  # Read the string
+
+        result = biggerIsGreater(w)
+
+        fptr.write(result + '\n')  # Write the result to the output file
+
+    fptr.close()
