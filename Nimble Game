@@ -1,0 +1,37 @@
+#!/bin/python3
+
+import os
+
+# Complete the 'nimbleGame' function below.
+# The function is expected to return a STRING.
+# The function accepts INTEGER_ARRAY s as parameter.
+
+def nimbleGame(s):
+    # Initialize a variable to keep track of the XOR result
+    result = 0
+    
+    # Iterate through the list of piles
+    for i in range(len(s)):
+        if s[i] % 2 != 0:  # Check if the number of chips is odd
+            result ^= i  # XOR the index of the pile with odd chips
+    
+    # Determine the winner based on the XOR result
+    if result != 0:
+        return "First"
+    else:
+        return "Second"
+
+if __name__ == '__main__':
+    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+
+    t = int(input().strip())  # Number of test cases
+
+    for t_itr in range(t):
+        n = int(input().strip())  # Number of piles (not used directly)
+        s = list(map(int, input().rstrip().split()))  # The list of piles
+
+        result = nimbleGame(s)
+
+        fptr.write(result + '\n')
+
+    fptr.close()
