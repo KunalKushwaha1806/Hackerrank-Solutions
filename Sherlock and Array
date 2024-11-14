@@ -1,0 +1,35 @@
+import os
+
+def balancedSums(arr):
+    # Calculate the total sum of the array
+    total_sum = sum(arr)
+    left_sum = 0
+    
+    # Iterate over each element to check for the balanced sum
+    for i in range(len(arr)):
+        # Subtract the current element from total_sum to get right_sum
+        right_sum = total_sum - left_sum - arr[i]
+        
+        # Check if left_sum equals right_sum
+        if left_sum == right_sum:
+            return "YES"
+        
+        # Update left_sum to include the current element
+        left_sum += arr[i]
+    
+    return "NO"
+
+if __name__ == '__main__':
+    fptr = open(os.environ['OUTPUT_PATH'], 'w')  # Make sure 'os' module is imported
+
+    T = int(input().strip())  # Read number of test cases
+
+    for T_itr in range(T):
+        n = int(input().strip())  # Read the size of the array
+        arr = list(map(int, input().rstrip().split()))  # Read the array
+
+        result = balancedSums(arr)  # Call the function to get result
+
+        fptr.write(result + '\n')  # Write the result to the output file
+
+    fptr.close()
