@@ -1,0 +1,30 @@
+def countSort(arr):
+    # First, determine the maximum integer value in the array for the size of the counting sort array
+    n = len(arr)
+    
+    # Create an array of lists to store elements by their integer values
+    count = [[] for _ in range(100)]  # Array to store strings for each integer value (0-99)
+    
+    # Step 1: Process the input and apply the replacement for the first half
+    for i in range(n):
+        num_str, string = arr[i]
+        num = int(num_str)
+        
+        if i < n // 2:
+            string = '-'  # Replace with dash for the first half
+        
+        count[num].append(string)  # Append the string to the corresponding list
+    
+    # Step 2: Output the sorted list by collecting strings from the 'count' array
+    result = []
+    for i in range(100):  # We're assuming that integers are between 0 and 99
+        result.extend(count[i])  # Add all strings in the current index (grouped by integer value)
+    
+    # Print the result as a space-separated string
+    print(" ".join(result))
+
+# Example usage:
+if __name__ == '__main__':
+    n = int(input().strip())  # Number of pairs
+    arr = [input().rstrip().split() for _ in range(n)]  # Read input pairs
+    countSort(arr)  # Call the countSort function
