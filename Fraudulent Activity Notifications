@@ -1,0 +1,60 @@
+def activityNotifications(expenditure, d):
+    # Initialize the frequency array for expenditure (0 to 200)
+    freq = [0] * 201  # We assume expenditures are in the range [0, 200]
+    notifications = 0
+    
+    # Helper function to find the median from the frequency array
+    def get_median():
+        count = 0
+        if d % 2 == 1:
+            # Odd number of elements, find the middle element
+            mid = (d + 1) // 2
+            for i in range(201):
+                count += freq[i]
+                if count >= mid:
+                    return i
+        else:
+            # Even number of elements, median is the average of two middle elements
+            mid1 = d // 2
+            mid2 = mid1 + 1
+            first, second = -1, -1
+            count = 0
+            for i in range(201):
+                count += freq[i]
+                if first == -1 and count >= mid1:
+                    first = i
+                if count >= mid2:
+                    second = i
+                    break
+            return (first + second) / 2
+    
+    # Populate the initial frequency array with the first 'd' expenditures
+    for i in range(d):
+        freq[expenditure[i]] += 1
+    
+    # Start processing the expenditures from day d to n-1
+    for i in range(d, len(expenditure)):
+        # Calculate the median of the last 'd' expenditures
+        median = get_median()
+        
+        # Check if a notification should be sent
+        if expenditure[i] >= 2 * median:
+            notifications += 1
+        
+        # Update the frequency array:
+        # Remove the oldest expenditure (i - d) from the frequency
+        freq[expenditure[i - d]] -= 1
+        # Add the new expenditure (expenditure[i]) to the frequency
+        freq[expenditure[i]] += 1
+    
+    return notifications
+
+# Example usage:
+if __name__ == '__main__':
+    # Read input
+    n, d = map(int, input().split())
+    expenditure = list(map(int, input().split()))
+    
+    # Call the activityNotifications function and print the result
+    result = activityNotifications(expenditure, d)
+    print(result)
