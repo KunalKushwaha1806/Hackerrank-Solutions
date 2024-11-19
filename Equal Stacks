@@ -1,0 +1,38 @@
+def equalStacks(h1, h2, h3):
+    # Calculate the initial sum of the three stacks
+    sum1 = sum(h1)
+    sum2 = sum(h2)
+    sum3 = sum(h3)
+    
+    # Initialize pointers for each stack (starting at the top of each stack)
+    i, j, k = 0, 0, 0
+    
+    # While the heights of all stacks are not equal
+    while not (sum1 == sum2 == sum3):
+        # If sum1 is the largest, pop the top cylinder from stack 1
+        if sum1 > sum2 or sum1 > sum3:
+            sum1 -= h1[i]
+            i += 1
+        # If sum2 is the largest, pop the top cylinder from stack 2
+        elif sum2 > sum1 or sum2 > sum3:
+            sum2 -= h2[j]
+            j += 1
+        # If sum3 is the largest, pop the top cylinder from stack 3
+        else:
+            sum3 -= h3[k]
+            k += 1
+    
+    # Return the common height
+    return sum1
+
+# Example usage:
+if __name__ == '__main__':
+    # Read input
+    n1, n2, n3 = map(int, input().split())  # The sizes of the three stacks
+    h1 = list(map(int, input().split()))  # Heights of the first stack
+    h2 = list(map(int, input().split()))  # Heights of the second stack
+    h3 = list(map(int, input().split()))  # Heights of the third stack
+    
+    # Call the equalStacks function and print the result
+    result = equalStacks(h1, h2, h3)
+    print(result)
