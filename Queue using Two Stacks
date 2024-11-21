@@ -1,0 +1,59 @@
+class QueueUsingTwoStacks:
+    def __init__(self):
+        self.stack_in = []   # Stack for enqueue operation
+        self.stack_out = []  # Stack for dequeue operation
+
+    def enqueue(self, x):
+        self.stack_in.append(x)
+        
+    def dequeue(self):
+        if not self.stack_out:  # If stack_out is empty, move elements from stack_in
+            while self.stack_in:
+                self.stack_out.append(self.stack_in.pop())
+        if self.stack_out:  # Pop from stack_out to dequeue
+            return self.stack_out.pop()
+        
+    def front(self):
+        if not self.stack_out:  # If stack_out is empty, move elements from stack_in
+            while self.stack_in:
+                self.stack_out.append(self.stack_in.pop())
+        if self.stack_out:  # The front of the queue is the top of stack_out
+            return self.stack_out[-1]
+
+# Main function to process queries
+def process_queries(queries):
+    q = QueueUsingTwoStacks()
+    results = []
+    
+    for query in queries:
+        query_type = query[0]
+        
+        if query_type == 1:
+            # Enqueue operation
+            q.enqueue(query[1])
+        elif query_type == 2:
+            # Dequeue operation
+            q.dequeue()
+        elif query_type == 3:
+            # Print the front element
+            results.append(q.front())
+    
+    return results
+
+# Reading input and executing the queries
+if __name__ == "__main__":
+    # Read number of queries
+    num_queries = int(input())
+    
+    # Read all queries
+    queries = []
+    for _ in range(num_queries):
+        query = list(map(int, input().split()))
+        queries.append(query)
+    
+    # Process the queries and get results for type 3
+    result = process_queries(queries)
+    
+    # Print results of type 3 queries
+    for res in result:
+        print(res)
