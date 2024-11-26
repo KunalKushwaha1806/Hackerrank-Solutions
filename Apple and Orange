@@ -1,0 +1,28 @@
+def countApplesAndOranges(s, t, a, b, apples, oranges):
+    apple_count = 0
+    orange_count = 0
+    
+    # Count apples that fall on the house
+    for apple in apples:
+        if a + apple >= s and a + apple <= t:
+            apple_count += 1
+    
+    # Count oranges that fall on the house
+    for orange in oranges:
+        if b + orange >= s and b + orange <= t:
+            orange_count += 1
+    
+    # Print the results
+    print(apple_count)
+    print(orange_count)
+
+# Read input
+if __name__ == '__main__':
+    s, t = map(int, input().split())  # The starting and ending points of the house
+    a, b = map(int, input().split())  # The positions of the apple and orange trees
+    m, n = map(int, input().split())  # Number of apples and oranges
+    apples = list(map(int, input().split()))  # Distances the apples fall
+    oranges = list(map(int, input().split()))  # Distances the oranges fall
+    
+    # Call the function with the input
+    countApplesAndOranges(s, t, a, b, apples, oranges)
