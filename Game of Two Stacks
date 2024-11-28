@@ -1,0 +1,50 @@
+def twoStacks(maxSum, a, b):
+    # Initialize the number of elements removed and the current sum
+    current_sum = 0
+    count = 0
+    i = 0
+    
+    # First, take as many elements as possible from stack a without exceeding maxSum
+    while i < len(a) and current_sum + a[i] <= maxSum:
+        current_sum += a[i]
+        count += 1
+        i += 1
+    
+    # Now, try to take as many elements as possible from stack b, without exceeding maxSum
+    max_count = count
+    j = 0
+    
+    # Now, iterate over stack b and try to remove elements from both stacks
+    while j < len(b):
+        current_sum += b[j]
+        j += 1
+        
+        # If the current sum exceeds maxSum, stop and break out
+        while current_sum > maxSum and count > 0:
+            # Remove one element from stack a and check again
+            i -= 1
+            current_sum -= a[i]
+            count -= 1
+        
+        # If we have a valid count, update the max_count
+        if current_sum <= maxSum:
+            max_count = max(max_count, count + j)
+    
+    return max_count
+
+# Input reading and processing
+if __name__ == '__main__':
+    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+    g = int(input().strip())  # number of games
+    for g_itr in range(g):
+        first_multiple_input = input().rstrip().split()
+        n = int(first_multiple_input[0])
+        m = int(first_multiple_input[1])
+        maxSum = int(first_multiple_input[2])
+        a = list(map(int, input().rstrip().split()))
+        b = list(map(int, input().rstrip().split()))
+        
+        result = twoStacks(maxSum, a, b)
+        fptr.write(str(result) + '\n')
+    
+    fptr.close()
