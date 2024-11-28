@@ -1,0 +1,21 @@
+def decentNumber(n):
+    # Try to find a valid number by adjusting the number of 5's
+    # Start with the largest number of 5's possible
+    fives = n
+    while fives % 3 != 0:
+        fives -= 5  # Try to reduce by 5 and check divisibility of remaining 5's by 3
+    
+    if fives < 0:
+        print(-1)  # It's impossible to form a decent number
+    else:
+        # If we have a valid number of 5's, the rest will be 3's
+        threes = n - fives
+        # Construct the largest decent number
+        print('5' * fives + '3' * threes)
+
+# Input reading and processing
+if __name__ == '__main__':
+    t = int(input())  # number of test cases
+    for _ in range(t):
+        n = int(input())  # length of the number
+        decentNumber(n)
