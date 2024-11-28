@@ -1,0 +1,14 @@
+def reverse(llist):
+    # Initialize pointers
+    prev = None
+    current = llist
+    
+    # Iterate through the list and reverse the links
+    while current:
+        next_node = current.next  # Save the next node
+        current.next = prev       # Reverse the current node's pointer
+        prev = current            # Move prev to the current node
+        current = next_node       # Move to the next node
+    
+    # prev will be the new head of the reversed list
+    return prev
