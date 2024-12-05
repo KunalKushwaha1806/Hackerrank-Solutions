@@ -1,0 +1,33 @@
+def nonDivisibleSubset(k, s):
+    # Step 1: Initialize remainder count array
+    remainder_count = [0] * k
+    
+    # Step 2: Count the frequency of each remainder
+    for num in s:
+        remainder_count[num % k] += 1
+    
+    # Step 3: Start with at most one element from the remainder group 0
+    result = min(remainder_count[0], 1)
+    
+    # Step 4: Handle pairs of remainders (r, k-r)
+    for r in range(1, (k // 2) + 1):
+        if r == k - r:
+            # Special case: when k is even, we can take at most one element from remainder k/2
+            result += 1
+        else:
+            # Choose the maximum of remainder group r and remainder group k-r
+            result += max(remainder_count[r], remainder_count[k - r])
+    
+    return result
+
+# Driver code for testing
+if __name__ == '__main__':
+    # Reading input from standard input
+    n, k = map(int, input().split())  # Read size of array and divisor
+    s = list(map(int, input().split()))  # Read the array of integers
+    
+    # Get the result from the function
+    result = nonDivisibleSubset(k, s)
+    
+    # Print the result
+    print(result)
