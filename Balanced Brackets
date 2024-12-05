@@ -1,0 +1,26 @@
+def isBalanced(s: str) -> str:
+    stack = []
+    # Mapping of closing brackets to opening brackets
+    bracket_map = {')': '(', '}': '{', ']': '['}
+    
+    # Traverse the string
+    for char in s:
+        if char in bracket_map.values():
+            # If it's an opening bracket, push it to the stack
+            stack.append(char)
+        elif char in bracket_map.keys():
+            # If it's a closing bracket, check if it matches the top of the stack
+            if stack and stack[-1] == bracket_map[char]:
+                stack.pop()
+            else:
+                return "NO"
+    
+    # If the stack is empty, the string is balanced
+    return "YES" if not stack else "NO"
+
+# Function to read input and process multiple test cases
+if __name__ == '__main__':
+    t = int(input().strip())  # Read the number of test cases
+    for _ in range(t):
+        s = input().strip()  # Read the string for each test case
+        print(isBalanced(s))  # Output result for each test case
