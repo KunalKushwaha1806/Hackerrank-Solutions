@@ -1,0 +1,29 @@
+from collections import deque, OrderedDict
+
+def topView(root):
+    if not root:
+        return
+    
+    # Dictionary to store the first node at each horizontal distance
+    top_view = {}
+    
+    # Queue for level-order traversal, stores (node, horizontal_distance)
+    queue = deque([(root, 0)])
+    
+    while queue:
+        node, hd = queue.popleft()
+        
+        # If this is the first node at this horizontal distance, add it
+        if hd not in top_view:
+            top_view[hd] = node.info
+        
+        # Add left and right children to the queue
+        if node.left:
+            queue.append((node.left, hd - 1))
+        if node.right:
+            queue.append((node.right, hd + 1))
+    
+    # Print the top view, sorted by horizontal distance
+    for hd in sorted(top_view):
+        print(top_view[hd], end=" ")
+
