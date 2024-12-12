@@ -1,0 +1,50 @@
+def textEditor(operations):
+    text = []  # A list to simulate the current text string
+    history = []  # A stack to store the operations for undo
+    
+    results = []  # To store the results of "print" operations
+    
+    for op in operations:
+        parts = op.split()
+        command = int(parts[0])
+        
+        if command == 1:  # Append operation
+            append_str = parts[1]
+            text.extend(append_str)  # Add the string to the text
+            history.append(('append', append_str))  # Record the append operation
+            
+        elif command == 2:  # Delete operation
+            delete_count = int(parts[1])
+            deleted_str = ''.join(text[-delete_count:])  # Save the string that will be deleted
+            text = text[:-delete_count]  # Remove the last delete_count characters from text
+            history.append(('delete', deleted_str))  # Record the delete operation
+        
+        elif command == 3:  # Print operation
+            index = int(parts[1]) - 1  # Convert to 0-based index
+            results.append(text[index])  # Get the character at the index
+        
+        elif command == 4:  # Undo operation
+            last_operation = history.pop()  # Get the last operation
+            
+            if last_operation[0] == 'append':
+                # Undo append by removing the appended string
+                append_str = last_operation[1]
+                text = text[:-len(append_str)]
+            elif last_operation[0] == 'delete':
+                # Undo delete by restoring the deleted string
+                deleted_str = last_operation[1]
+                text.extend(deleted_str)  # Add the deleted string back to text
+    
+    return results
+
+# Sample usage
+if __name__ == '__main__':
+    # Read input
+    Q = int(input().strip())  # Number of operations
+    operations = [input().strip() for _ in range(Q)]
+    
+    # Call the textEditor function and get results
+    result = textEditor(operations)
+    
+    # Output the result
+    print("\n".join(result))
