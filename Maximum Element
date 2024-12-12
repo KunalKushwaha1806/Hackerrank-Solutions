@@ -1,0 +1,35 @@
+def getMax(operations):
+    stack = []
+    max_stack = []
+    result = []
+
+    for op in operations:
+        parts = op.split()
+        
+        if parts[0] == '1':  # Push operation
+            x = int(parts[1])
+            stack.append(x)
+            if max_stack:
+                max_stack.append(max(x, max_stack[-1]))
+            else:
+                max_stack.append(x)
+        
+        elif parts[0] == '2':  # Pop operation
+            stack.pop()
+            max_stack.pop()
+        
+        elif parts[0] == '3':  # Max operation
+            result.append(max_stack[-1])
+    
+    return result
+
+# Sample input/output usage
+if __name__ == '__main__':
+    n = int(input().strip())
+    operations = [input().strip() for _ in range(n)]
+    
+    result = getMax(operations)
+    
+    # Output the result of all type 3 queries
+    for res in result:
+        print(res)
