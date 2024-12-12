@@ -1,0 +1,42 @@
+
+def weightedUniformStrings(s, queries):
+    # Set to store the weights of uniform substrings
+    weights = set()
+    
+    # Variable to track the weight of the current uniform substring
+    current_weight = 0
+    
+    # Traverse through the string
+    for i in range(len(s)):
+        # If the current character is the same as the previous one, add its value to the current weight
+        if i > 0 and s[i] == s[i - 1]:
+            current_weight += ord(s[i]) - ord('a') + 1
+        else:
+            # Otherwise, it's a new uniform substring, start with its weight
+            current_weight = ord(s[i]) - ord('a') + 1
+        
+        # Add the current weight to the set of weights
+        weights.add(current_weight)
+    
+    # Process each query and return "Yes" or "No" based on whether the queried weight is in the set
+    result = []
+    for query in queries:
+        if query in weights:
+            result.append("Yes")
+        else:
+            result.append("No")
+    
+    return result
+
+# Sample usage
+if __name__ == '__main__':
+    # Read input
+    s = input().strip()
+    queries_count = int(input().strip())
+    queries = [int(input().strip()) for _ in range(queries_count)]
+    
+    # Get the result
+    result = weightedUniformStrings(s, queries)
+    
+    # Output the result
+    print("\n".join(result))
