@@ -1,0 +1,25 @@
+from collections import deque
+
+def solve(n):
+    queue = deque(["9"])
+    visited = set()
+    
+    while queue:
+        current = queue.popleft()
+        num = int(current)
+        if num % n == 0:
+            return current
+        
+        remainder = num % n
+        if remainder not in visited:
+            visited.add(remainder)
+            queue.append(current + "0")
+            queue.append(current + "9")
+
+if __name__ == '__main__':
+    t = int(input().strip())
+    results = []
+    for _ in range(t):
+        n = int(input().strip())
+        results.append(solve(n))
+    print("\n".join(results))
