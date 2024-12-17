@@ -1,0 +1,9 @@
+
+def strangeGrid(r,c):
+    d,m=divmod(r-1,2)
+    a=d*10+2*c
+    a-=1 if m else 2
+    return a
+
+r,c=map(int,input().split())
+print(strangeGrid(r,c))
