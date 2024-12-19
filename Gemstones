@@ -1,0 +1,31 @@
+import os
+def gemstones(arr):
+    # Start with the set of minerals in the first rock
+    gemstones_set = set(arr[0])  # This will store the potential gemstones
+    
+    # Iterate through the rest of the rocks
+    for rock in arr[1:]:
+        # Update the gemstones_set by taking the intersection with the minerals in the current rock
+        gemstones_set &= set(rock)
+    
+    # The result is the size of the intersection set
+    return len(gemstones_set)
+
+if __name__ == '__main__':
+    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+    
+    # Read the number of rocks
+    n = int(input().strip())
+    
+    arr = []
+    for _ in range(n):
+        arr_item = input().strip()
+        arr.append(arr_item)
+    
+    # Call the gemstones function
+    result = gemstones(arr)
+    
+    # Write the result to the output
+    fptr.write(str(result) + '\n')
+    
+    fptr.close()
