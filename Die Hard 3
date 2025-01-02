@@ -1,0 +1,19 @@
+import math
+
+def solve(a, b, c):
+    # Check if c is measurable
+    if c > max(a, b):
+        return "NO"
+    if c % math.gcd(a, b) == 0:
+        return "YES"
+    return "NO"
+
+if __name__ == '__main__':
+    t = int(input().strip())  # Number of test cases
+    results = []
+    for _ in range(t):
+        a, b, c = map(int, input().split())
+        results.append(solve(a, b, c))
+    
+    # Print all results
+    print("\n".join(results))
