@@ -1,0 +1,23 @@
+def organizingContainers(container):
+    # Calculate the row sums and column sums
+    row_sums = [sum(row) for row in container]
+    col_sums = [sum(col) for col in zip(*container)]  # Transpose to get column sums
+    
+    # Check if the sorted row sums and column sums are identical
+    if sorted(row_sums) == sorted(col_sums):
+        return "Possible"
+    else:
+        return "Impossible"
+
+if __name__ == '__main__':
+    q = int(input().strip())  # Number of queries
+    results = []
+    for _ in range(q):
+        n = int(input().strip())  # Number of containers and types of balls
+        container = []
+        for _ in range(n):
+            container.append(list(map(int, input().split())))
+        results.append(organizingContainers(container))
+    
+    # Print results for each query
+    print("\n".join(results))
