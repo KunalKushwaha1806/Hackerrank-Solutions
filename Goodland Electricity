@@ -1,0 +1,47 @@
+#!/bin/python3
+
+import math
+import os
+import random
+import re
+import sys
+
+def pylons(k, arr):
+    n = len(arr)
+    count = 0
+    i = 0
+
+    while i < n:
+        # Search for the rightmost city to place a plant in range [i + k - 1, i - (k - 1)]
+        found = False
+        # max position to place a plant in this round (can't go beyond n - 1)
+        pos = min(n - 1, i + k - 1)
+        while pos >= max(0, i - (k - 1)):
+            if arr[pos] == 1:
+                count += 1
+                i = pos + k  # move to next uncovered city
+                found = True
+                break
+            pos -= 1
+        if not found:
+            return -1
+
+    return count
+
+
+if __name__ == '__main__':
+    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+
+    first_multiple_input = input().rstrip().split()
+
+    n = int(first_multiple_input[0])
+
+    k = int(first_multiple_input[1])
+
+    arr = list(map(int, input().rstrip().split()))
+
+    result = pylons(k, arr)
+
+    fptr.write(str(result) + '\n')
+
+    fptr.close()
