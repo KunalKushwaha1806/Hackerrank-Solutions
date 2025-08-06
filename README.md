@@ -52,5 +52,5 @@ Contributions are welcome! If you'd like to add solutions or improve existing on
 
 Feel free to reach out if you have questions or suggestions!
 
-- **GitHub**: [Your GitHub Profile](https://github.com/kunalkushwaha1806)
+- **GitHub**: [click](https://github.com/kunalkushwaha1806)
 - **Email**: kunalkushwaha8090@gmail.com
