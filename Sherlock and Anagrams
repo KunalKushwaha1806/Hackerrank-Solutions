@@ -1,0 +1,50 @@
+#!/bin/python3
+from collections import defaultdict
+
+import math
+import os
+import random
+import re
+import sys
+
+#
+# Complete the 'sherlockAndAnagrams' function below.
+#
+# The function is expected to return an INTEGER.
+# The function accepts STRING s as parameter.
+#
+
+def sherlockAndAnagrams(s):
+    anagram_counts = defaultdict(int)
+    
+    total_anagram_pairs = 0
+    
+    n = len(s)
+    
+    for i in range(n):
+        for j in range(i, n):
+            substring = s[i:j+1]
+            
+            sorted_substring = ''.join(sorted(substring))
+            
+            anagram_counts[sorted_substring] += 1
+            
+    for count in anagram_counts.values():
+        if count > 1:
+            total_anagram_pairs += (count * (count - 1)) // 2
+            
+    return total_anagram_pairs
+
+if __name__ == '__main__':
+    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+
+    q = int(input().strip())
+
+    for q_itr in range(q):
+        s = input()
+
+        result = sherlockAndAnagrams(s)
+
+        fptr.write(str(result) + '\n')
+
+    fptr.close()
