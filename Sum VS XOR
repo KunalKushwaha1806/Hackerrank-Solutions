@@ -1,0 +1,29 @@
+#!/bin/python3
+
+import math
+import os
+import random
+import re
+import sys
+
+
+
+def sumXor(n):
+    if n == 0:
+        return 1 
+    binary_n = bin(n)
+    count_zeros = binary_n.count('0') - 1 # count the number of zeroes in the binary and then return the 2th power of the count 
+    return 2 ** count_zeros
+
+
+
+if __name__ == '__main__':
+    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+
+    n = int(input().strip())
+
+    result = sumXor(n)
+
+    fptr.write(str(result) + '\n')
+
+    fptr.close()
