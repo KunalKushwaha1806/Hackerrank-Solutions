@@ -1,0 +1,56 @@
+#!/bin/python3
+
+import math
+import os
+import random
+import re
+import sys
+
+#
+# Complete the 'winningLotteryTicket' function below.
+#
+# The function is expected to return a LONG_INTEGER.
+# The function accepts STRING_ARRAY tickets as parameter.
+#
+
+def winningLotteryTicket(tickets):
+    freq = [0] * 1024   # frequency of each mask
+    
+    # Build frequency of digit masks
+    for t in tickets:
+        mask = 0
+        for d in t:
+            mask |= 1 << int(d)
+        freq[mask] += 1
+    
+    full_mask = (1 << 10) - 1  # 1023
+    count = 0
+    
+    # Count pairs of different masks
+    for m1 in range(1024):
+        for m2 in range(m1+1, 1024):
+            if m1 | m2 == full_mask:
+                count += freq[m1] * freq[m2]
+    
+    # Count pairs within the same mask
+    count += (freq[full_mask] * (freq[full_mask] - 1)) // 2
+    
+    return count
+
+
+if __name__ == '__main__':
+    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+
+    n = int(input().strip())
+
+    tickets = []
+
+    for _ in range(n):
+        tickets_item = input()
+        tickets.append(tickets_item)
+
+    result = winningLotteryTicket(tickets)
+
+    fptr.write(str(result) + '\n')
+
+    fptr.close()
