@@ -1,0 +1,49 @@
+
+
+import heapq
+import os
+
+def runningMedian(a):
+    # Create two heaps, a max-heap for the lower half of numbers
+    # and a min-heap for the upper half.
+    low, high = [], []  # low is max-heap (invert values to simulate max-heap), high is min-heap
+    medians = []
+
+    for num in a:
+        # Add to the appropriate heap
+        if len(low) == 0 or num <= -low[0]:
+            heapq.heappush(low, -num)  # Max-heap
+        else:
+            heapq.heappush(high, num)  # Min-heap
+        
+        # Balance the heaps if necessary
+        if len(low) > len(high) + 1:
+            heapq.heappush(high, -heapq.heappop(low))
+        if len(high) > len(low):
+            heapq.heappush(low, -heapq.heappop(high))
+        
+        # Get the median
+        if len(low) > len(high):
+            medians.append(float(-low[0]))  # Odd length, max of lower half is the median
+        else:
+            medians.append((float(-low[0]) + float(high[0])) / 2)  # Even length, average of both halves
+    
+    return medians
+
+
+if __name__ == '__main__':
+    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+
+    a_count = int(input().strip())
+    a = []
+
+    for _ in range(a_count):
+        a_item = int(input().strip())
+        a.append(a_item)
+
+    result = runningMedian(a)
+
+    fptr.write('\n'.join(map(str, result)))
+    fptr.write('\n')
+
+    fptr.close()
