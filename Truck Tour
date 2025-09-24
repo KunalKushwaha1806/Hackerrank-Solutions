@@ -1,0 +1,48 @@
+#!/bin/python3
+
+import math
+import os
+import random
+import re
+import sys
+
+def truckTour(petrolpumps):
+    n = len(petrolpumps)
+    
+    start_index = 0  # Start from the first pump initially
+    current_fuel = 0  # Start with no fuel
+    
+    for i in range(n):
+        petrol, distance = petrolpumps[i]
+        
+        # Add the petrol at the current pump to current fuel
+        current_fuel += petrol
+        
+        # Subtract the distance to the next pump
+        current_fuel -= distance
+        
+        # If current_fuel goes negative, then we can't start from `start_index`
+        if current_fuel < 0:
+            # Reset the starting point to the next pump and reset current fuel
+            start_index = i + 1
+            current_fuel = 0
+    
+    # The starting index at the end is the solution
+    return start_index
+
+
+if __name__ == '__main__':
+    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+
+    n = int(input().strip())
+
+    petrolpumps = []
+
+    for _ in range(n):
+        petrolpumps.append(list(map(int, input().rstrip().split())))
+
+    result = truckTour(petrolpumps)
+
+    fptr.write(str(result) + '\n')
+
+    fptr.close()
