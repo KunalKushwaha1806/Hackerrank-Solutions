@@ -1,0 +1,60 @@
+import math
+import os
+import random
+import re
+import sys
+def gridlandMetro(n, m, k, track):
+    tracks_by_row = {}
+    for r, c1, c2 in track:
+        if r not in tracks_by_row:
+            tracks_by_row[r] = []
+        tracks_by_row[r].append((c1, c2))
+
+    occupied_cells = 0
+    
+    for row in tracks_by_row:
+        intervals = sorted(tracks_by_row[row])
+        
+        if not intervals:
+            continue
+            
+        merged_intervals = []
+        current_start, current_end = intervals[0]
+        
+        for i in range(1, len(intervals)):
+            next_start, next_end = intervals[i]
+            
+            if next_start <= current_end:
+                current_end = max(current_end, next_end)
+            else:
+                merged_intervals.append((current_start, current_end))
+                current_start, current_end = next_start, next_end
+        
+        merged_intervals.append((current_start, current_end))
+        
+        for start, end in merged_intervals:
+            occupied_cells += (end - start + 1)
+            
+    total_area = n * m
+    return total_area - occupied_cells
+if __name__ == '__main__':
+    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+
+    first_multiple_input = input().rstrip().split()
+
+    n = int(first_multiple_input[0])
+
+    m = int(first_multiple_input[1])
+
+    k = int(first_multiple_input[2])
+
+    track = []
+
+    for _ in range(k):
+        track.append(list(map(int, input().rstrip().split())))
+
+    result = gridlandMetro(n, m, k, track)
+
+    fptr.write(str(result) + '\n')
+
+    fptr.close()
