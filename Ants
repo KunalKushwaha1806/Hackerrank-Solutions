@@ -1,0 +1,45 @@
+#!/bin/python3
+
+import math
+import os
+import random
+import re
+import sys
+
+def solve(V):
+    n = len(V)
+    meets = (n // 2) * (n - n // 2) * 2 * 2 * 10**5
+
+    V.sort()
+
+    pos = 0
+    while pos < n and (V[pos] - V[pos - 1]) % 1000 <= 1:
+        pos += 1
+
+    run = 0
+    for i in range(pos, pos + n):
+        if (V[i % n] - V[(i - 1) % n]) % 1000 == 1:
+            run += 1
+        else:
+            if run > 0:
+                meets += (run + 1) // 2 * 2
+                run = 0
+
+    if run > 0:
+        meets += (run + 1) // 2 * 2
+
+    return meets
+
+
+if __name__ == '__main__':
+    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+
+    V_count = int(input().strip())
+
+    V = list(map(int, input().rstrip().split()))
+
+    result = solve(V)
+
+    fptr.write(str(result) + '\n')
+
+    fptr.close()
