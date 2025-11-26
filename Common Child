@@ -1,0 +1,26 @@
+def commonChild(s1, s2):
+    # Initialize a 2D DP table with dimensions (len(s1)+1) x (len(s2)+1)
+    # Each cell dp[i][j] will store the length of the LCS of s1[:i] and s2[:j]
+    dp = [[0] * (len(s2) + 1) for _ in range(len(s1) + 1)]
+
+    # Iterate through the DP table, filling it based on character comparisons
+    for i in range(1, len(s1) + 1):
+        for j in range(1, len(s2) + 1):
+            # If the current characters match, extend the LCS from the diagonal cell
+            if s1[i - 1] == s2[j - 1]:
+                dp[i][j] = dp[i - 1][j - 1] + 1
+            # If characters don't match, take the maximum LCS length from
+            # either excluding the last character of s1 or s2
+            else:
+                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
+
+    # The final answer is in the bottom-right cell of the DP table
+    return dp[len(s1)][len(s2)]
+
+if __name__ == '__main__':
+    s1 = input()
+    s2 = input()
+
+    result = commonChild(s1, s2)
+
+    print(result)
